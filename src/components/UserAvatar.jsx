@@ -5,6 +5,7 @@ import { IoLogOutOutline } from "react-icons/io5";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { getInitials } from "../utils";
+import { logout } from "../redux/slices/authSlice";
 
 const UserAvatar = () => {
   const [open, setOpen] = useState(false);
@@ -14,7 +15,8 @@ const UserAvatar = () => {
   const navigate = useNavigate();
 
   const logoutHandler = () => {
-    console.log("logout");
+    dispatch(logout());
+    navigate("/log-in");
   };
 
   return (
@@ -43,7 +45,7 @@ const UserAvatar = () => {
                 <Menu.Item>
                   {({ active }) => (
                     <button
-                      onClick={() => setOpen(true)}
+                      onClick={() => navigate('/profile')}
                       className='text-gray-700 group flex w-full items-center rounded-md px-2 py-2 text-base'
                     >
                       <FaUser className='mr-2' aria-hidden='true' />
@@ -56,7 +58,7 @@ const UserAvatar = () => {
                   {({ active }) => (
                     <button
                       onClick={() => setOpenPassword(true)}
-                      className={`tetx-gray-700 group flex w-full items-center rounded-md px-2 py-2 text-base`}
+                      className='text-gray-700 group flex w-full items-center rounded-md px-2 py-2 text-base'
                     >
                       <FaUserLock className='mr-2' aria-hidden='true' />
                       Change Password
@@ -68,7 +70,7 @@ const UserAvatar = () => {
                   {({ active }) => (
                     <button
                       onClick={logoutHandler}
-                      className={`text-red-600 group flex w-full items-center rounded-md px-2 py-2 text-base`}
+                      className='text-red-600 group flex w-full items-center rounded-md px-2 py-2 text-base'
                     >
                       <IoLogOutOutline className='mr-2' aria-hidden='true' />
                       Logout
@@ -79,6 +81,22 @@ const UserAvatar = () => {
             </Menu.Items>
           </Transition>
         </Menu>
+
+        {/* Change Password Modal - Placeholder */}
+        {openPassword && (
+          <div className="fixed inset-0 flex items-center justify-center bg-black/50">
+            <div className="bg-white p-6 rounded shadow-lg">
+              <h3 className="text-lg font-bold mb-4">Change Password</h3>
+              {/* Implement password change form here */}
+              <button
+                onClick={() => setOpenPassword(false)}
+                className="mt-2 px-4 py-2 bg-red-600 text-white rounded"
+              >
+                Close
+              </button>
+            </div>
+          </div>
+        )}
       </div>
     </>
   );
